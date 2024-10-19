@@ -13,13 +13,14 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.m
 const options = {
   cMapUrl: '/cmaps/',
   standardFontDataUrl: '/standard_fonts/',
+  renderInteractiveForms: false,
 };
 
 const resizeObserverOptions = {};
 
 type PDFFile = File | null;
 
-export default function ImprovedPDFViewer() {
+export default function PDFViewer() {
   const [file, setFile] = useState<PDFFile>(null);
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState(1);
@@ -254,7 +255,7 @@ export default function ImprovedPDFViewer() {
             </div>
 
             <div
-              className="flex justify-center items-center overflow-hidden mx-auto border border-gray-300"
+              className="flex justify-center items-center overflow-hidden mx-auto "
               ref={containerRef}
               style={{
                 width: `${containerSize.width}px`,
@@ -283,6 +284,8 @@ export default function ImprovedPDFViewer() {
                     scale={scale}
                     rotate={rotation}
                     onLoadSuccess={handlePageLoadSuccess}
+                    renderTextLayer={false}
+                    renderAnnotationLayer={false}
                   />
                 </Document>
               </div>
